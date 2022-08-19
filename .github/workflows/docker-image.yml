@@ -16,5 +16,7 @@ jobs:
     - uses: actions/checkout@v2
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag mprokopov/oxid-grunt-runner:$(date +%s)
-
-
+    - name: Checkout wave theme
+      run: git clone --depth 1 git@github.com:OXID-eSales/wave-theme.git
+    - name: Run Docker container with wave theme
+      run: docker run --rm -v $(pwd)/wave-theme:/app mprokopov/oxid-grunt-runner build
