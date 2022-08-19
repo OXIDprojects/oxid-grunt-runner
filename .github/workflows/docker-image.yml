@@ -13,10 +13,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - name: Checkout
+      uses: actions/checkout@v3
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag mprokopov/oxid-grunt-runner:$(date +%s)
     - name: Checkout wave theme
-      run: git clone --depth 1 git@github.com:OXID-eSales/wave-theme.git
+      uses: actions/checkout@v3
+      with:
+          repository: OXID-eSales/wave-theme
+          path: wave-theme
     - name: Run Docker container with wave theme
       run: docker run --rm -v $(pwd)/wave-theme:/app mprokopov/oxid-grunt-runner build
